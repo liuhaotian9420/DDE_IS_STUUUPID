@@ -4,7 +4,11 @@ import numpy as np
 from tqdm import tqdm
 import time
 
-df = pd.read_excel('',engine='openpyxl')
+
+excel_path = ''        # excel 路径，最好放在 original 下面，例如：original/app-orgnization（翻译字段）.xlsm
+result_name = ''       # 记得加上 .xlsx 后缀，例如： DDESB.xlsx
+
+df = pd.read_excel(excel_path,engine='openpyxl')
 
 separator = '--}}--{{--'
 
@@ -55,7 +59,7 @@ setups = [
 
 results = []
 
-for i in tqdm(np.arange(40,70,1)):
+for i in tqdm(np.arange(chunck_counts)):
     
     if i%10==0:
 
@@ -75,4 +79,4 @@ for i in tqdm(np.arange(40,70,1)):
     setups += [{"role":"assistant","content":translation}]
     time.sleep(1.5)
 
-pd.DataFrame({'translation':results}).to_excel('translated/results.xlsx',index=False)
+pd.DataFrame({'translation':results}).to_excel('translated/{result_name}'.format(result_name = result_name),index=False)
